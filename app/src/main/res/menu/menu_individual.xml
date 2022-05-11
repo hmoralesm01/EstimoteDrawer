@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Menu"
+        android:id="@+id/act_menu"
+        ></item>
+    <item
+        android:title="Reserva"
+        android:id="@+id/act_reservar">
+        ></item>
+    <item
+        android:title="Enviar Mensaje"
+        android:id="@+id/act_enviarmensaje">
+        ></item>
+</menu>

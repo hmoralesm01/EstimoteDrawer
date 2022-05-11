@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.23645833333333333" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/drawable/border.xml" value="0.23645833333333333" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/drawable/ic_launcher_background.xml" value="0.23645833333333333" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/drawable/ic_menu_camera.xml" value="0.13796296296296295" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.287962962962963" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/drawable/menu_bar.xml" value="0.23645833333333333" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/layout/activity_add_booking.xml" value="0.2203125" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/layout/activity_log_in.xml" value="0.3375" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/layout/app_bar_main.xml" value="0.1" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/layout/cardview_item.xml" value="0.3375" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/layout/cardview_item_booking.xml" value="0.3194444444444444" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/layout/content_main.xml" value="0.3656884875846501" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/layout/fragment_gallery.xml" value="0.3375" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/layout/fragment_home.xml" value="0.23351648351648352" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/layout/fragment_slideshow.xml" value="0.3375" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/layout/nav_header_main.xml" value="0.3375" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/menu/activity_main_drawer.xml" value="0.3375" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/menu/main.xml" value="0.3375" />
+        <entry key="..\:/EstimoteDrawer/app/src/main/res/menu/menu_individual.xml" value="0.26944444444444443" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

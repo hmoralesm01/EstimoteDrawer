@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "479528242389",
+    "firebase_url": "https://estimotedrawer-default-rtdb.firebaseio.com",
+    "project_id": "estimotedrawer",
+    "storage_bucket": "estimotedrawer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479528242389:android:a71b5d7ed07e49d04a665c",
+        "android_client_info": {
+          "package_name": "com.example.estimotedrawer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "479528242389-lq6grctgrg919cqtdilut6tv8ah6gltf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.estimotedrawer",
+            "certificate_hash": "f19e293907dbad6ced17bfd8964f2d0b6aa887bf"
+          }
+        },
+        {
+          "client_id": "479528242389-reekt5evgcl06rfd80plmf4j56tja4e7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLCmX_T1A6OnrrFfafPj0FEwmDP3SZ028"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "479528242389-reekt5evgcl06rfd80plmf4j56tja4e7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
