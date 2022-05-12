@@ -26,13 +26,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
+
 
 public class log_in extends AppCompatActivity implements View.OnClickListener {
 
@@ -55,9 +52,8 @@ public class log_in extends AppCompatActivity implements View.OnClickListener {
 
         //visibilidad
         binding.signInButton.setVisibility(View.VISIBLE);
-        binding.signOutButton.setVisibility(View.GONE);
         binding.signInButton.setOnClickListener(this);
-        binding.signOutButton.setOnClickListener(this);
+
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -71,35 +67,12 @@ public class log_in extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    //metodo donde lee un objeto de la lista
-    public void objetoLista(){
-
-        listaLocales = new ArrayList<>();
-        mDatabase.child("locales_list").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot pro : snapshot.getChildren()) {
-                    Local b = pro.getValue(Local.class);
-                    
-                    listaLocales.add(b);
-                    System.out.println("b.toString() = " + b.toString());
-                }
-                System.out.println("listaLocales.size() = " + listaLocales.size());
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
-
     @Override
     public void onClick(View v) {
         int i = v.getId();
 
         if (i == R.id.signInButton) {
             signIn();
-        } else if (i == R.id.signOutButton) {
-            signOut();
         }
     }
 
@@ -161,10 +134,8 @@ public class log_in extends AppCompatActivity implements View.OnClickListener {
             //Aqui creamos nuestro UserModelo
 
             binding.signInButton.setVisibility(View.GONE);
-            binding.signOutButton.setVisibility(View.VISIBLE);
         } else {
             binding.signInButton.setVisibility(View.VISIBLE);
-            binding.signOutButton.setVisibility(View.GONE);
         }
     }
 
