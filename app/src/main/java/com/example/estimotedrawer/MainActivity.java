@@ -204,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements DialogConfirmatio
                 break;
             case 1:
                 System.out.println("bluetooth = " + requestCode);
+                break;
         }
     }
     @Override

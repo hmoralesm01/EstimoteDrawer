@@ -1,5 +1,6 @@
 package com.example.estimotedrawer.ui.invitar;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -22,6 +23,7 @@ import java.util.regex.Pattern;
 public class Invitar extends Fragment implements View.OnClickListener {
 
     private FragmentInvitarBinding binding;
+    private BluetoothAdapter bluetoothAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class Invitar extends Fragment implements View.OnClickListener {
         binding = FragmentInvitarBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        bluetoothChecker();
         binding.bEnviarInvitacion.setOnClickListener(this);
 
         return root;
@@ -101,6 +104,17 @@ public class Invitar extends Fragment implements View.OnClickListener {
             startActivity(Intent.createChooser(intent, "Invitacion"));
         }else{
             Toast.makeText(getContext(), "Email formato no valido", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void bluetoothChecker(){
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bluetoothAdapter == null) {
+            // Device doesn't support Bluetooth
+            Toast.makeText(getContext(), "Dispositivo sin bluetooth", Toast.LENGTH_LONG).show();
+        }else if (!bluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, 1);
         }
     }
 

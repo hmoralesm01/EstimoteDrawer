@@ -2,7 +2,9 @@ package com.example.estimotedrawer.ui.home;
 
 import static com.estimote.coresdk.common.config.EstimoteSDK.getApplicationContext;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -35,7 +37,7 @@ public class HomeFragment extends Fragment{
     private FragmentHomeBinding binding;
     private ArrayList<Local> listaLocales;
     private DatabaseReference mDatabase;
-
+    private BluetoothAdapter bluetoothAdapter;
     RecyclerView.LayoutManager layoutManager;
     MyAdapter myAdapter;
 
@@ -59,6 +61,8 @@ public class HomeFragment extends Fragment{
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        bluetoothChecker();
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
         objetoLista();
 
@@ -72,6 +76,16 @@ public class HomeFragment extends Fragment{
         });
 
         return root;
+    }
+    public void bluetoothChecker(){
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bluetoothAdapter == null) {
+            // Device doesn't support Bluetooth
+            Toast.makeText(getContext(), "Dispositivo sin bluetooth", Toast.LENGTH_LONG).show();
+        }else if (!bluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, 1);
+        }
     }
 
     @Override
