@@ -22,4 +22,9 @@
         android:name="com.example.estimotedrawer.ui.exit.Exit"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_exit" />
+    <fragment
+            android:id="@+id/nav_invitar"
+            android:name="com.example.estimotedrawer.ui.invitar.Invitar"
+            android:label="@string/menu_invitar"
+            tools:layout="@layout/fragment_invitar" />
 </navigation>

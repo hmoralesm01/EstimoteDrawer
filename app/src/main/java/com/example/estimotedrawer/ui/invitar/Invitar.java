@@ -1,63 +1,123 @@
 package com.example.estimotedrawer.ui.invitar;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.example.estimotedrawer.MainActivity;
 import com.example.estimotedrawer.R;
+import com.example.estimotedrawer.databinding.FragmentHomeBinding;
+import com.example.estimotedrawer.databinding.FragmentInvitarBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Invitar#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Invitar extends Fragment {
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class Invitar extends Fragment implements View.OnClickListener {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public Invitar() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Invitar.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Invitar newInstance(String param1, String param2) {
-        Invitar fragment = new Invitar();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private FragmentInvitarBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_invitar, container, false);
+        binding = FragmentInvitarBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+
+        binding.bEnviarInvitacion.setOnClickListener(this);
+
+        return root;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int n = v.getId();
+        switch (n){
+            case R.id.b_enviarInvitacion:
+            enviarEmailStack();
+        }
+    }
+    public void botonEnviar(String email){
+
+        Intent intent= new Intent();
+
+        PackageManager packageManager = getActivity().getPackageManager();
+        List<ResolveInfo> activities;
+        boolean isIntentSafe;
+
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setData(Uri.parse("mailto:"));
+
+        String para[] = {
+                binding.txEmail.getText().toString()
+        };
+
+        intent.putExtra(Intent.EXTRA_EMAIL, para);
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Alguiler de bicicleta");
+
+        intent.setType("message/rfc822");
+
+        intent.createChooser(intent, "Enviar email");
+
+        activities = packageManager.queryIntentActivities(intent,
+                PackageManager.MATCH_DEFAULT_ONLY);
+        isIntentSafe = activities.size() > 0;
+
+        if (isIntentSafe)
+            // Paso 5: Arrancar la actividad
+            startActivity(intent);
+        else Toast.makeText(getContext(), "¡No dispondes de una app para enviar un email!",
+                Toast.LENGTH_LONG).show();
+
+        Toast.makeText(getContext(), "Amigo invitado", Toast.LENGTH_LONG).show();
+    }
+    private void enviarEmailStack(){
+
+        if(validarEmail()){
+            String subject = "¡Eres muy afortunado!";
+            String message = "Tu amigo "+ MainActivity.emailUsuario +" quiere invitarte a usar esta App \n \n"+
+                    "https://mega.nz/folder/r2gxCCiD#zPTmGtd8OaadofUI_0kGvQ";
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{binding.txEmail.getText().toString()});
+            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+            intent.putExtra(Intent.EXTRA_TEXT, message);
+
+            intent.setType("message/rfc822");
+            startActivity(Intent.createChooser(intent, "Invitacion"));
+        }else{
+            Toast.makeText(getContext(), "Email formato no valido", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public boolean validarEmail(){
+        // Patrón para validar el email
+        Pattern pattern = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+
+        // El email a validar
+        String email = binding.txEmail.getText().toString();
+        Matcher mather = pattern.matcher(email);
+
+        if (mather.find() == true) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

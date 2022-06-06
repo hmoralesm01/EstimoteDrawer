@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements DialogConfirmatio
     private int positionRecycle;
     public static ArrayList<Local> listLocales;
     private final static String UUID_ID = "d6714228-7bbb-41fc-91e3-24e6aadd3703";
+    public static String emailUsuario;
 
     //bbdd
     private SQLiteDatabase db;
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements DialogConfirmatio
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_reservas, R.id.nav_exit)
+                R.id.nav_home, R.id.nav_reservas, R.id.nav_invitar, R.id.nav_exit)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -274,8 +275,10 @@ public class MainActivity extends AppCompatActivity implements DialogConfirmatio
             TextView userName = headerView.findViewById(R.id.tEmail);
             if(mAuth !=null){
                 userName.setText(String.valueOf(mAuth.getCurrentUser().getEmail()));
+                emailUsuario = String.valueOf(mAuth.getCurrentUser().getEmail());
             }else{
                 userName.setText("User");
+                emailUsuario = "User";
             }
         }catch (Exception e){
             System.out.println("No se ha podido poner el nombre");
@@ -341,12 +344,6 @@ public class MainActivity extends AppCompatActivity implements DialogConfirmatio
 
     @Override
     public void onResultadoLocalReview(String localName) {
-        /*Local l = listLocales.stream().filter(local -> local.getName().equalsIgnoreCase(localName)).findFirst().orElse(null);
-        Log.d("nombre ", localName);
-        Intent i = new Intent(this, VerReviewsActivity.class);
-        i.putParcelableArrayListExtra("lista", l.getListReviews());
-
-        startActivity(i);*/
         String urlWeb = localName;
         if (!urlWeb.startsWith("http://") && !urlWeb.startsWith("https://"))
             urlWeb = "http://" + urlWeb;
@@ -370,9 +367,5 @@ public class MainActivity extends AppCompatActivity implements DialogConfirmatio
         String consulta = "delete from bookings where rowid ="+this.idReserva;
         db.execSQL(consulta);
     }
-    public void aaa(){
-        for(int i=0;i<listLocales.size();i++){
-            saveInBBDD(new Booking(1,listLocales.get(i).getName(),"222333333","25/10/2022", "25/10/2022", 19, "22:22"));
-        }
-    }
+
 }
