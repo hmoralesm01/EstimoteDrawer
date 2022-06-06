@@ -16,9 +16,29 @@ public class Local implements Serializable {
     private int capacityMax;
     private double capacityPorcentage;
     private String phone;
+    private String photoURL;
+    private ArrayList<Review> listReviews;
+    private String urlToGoogle;
 
     public Local() {
         listEstimotes = new ArrayList<>();
+        listReviews = new ArrayList<>();
+    }
+
+    public String getUrlToGoogle() {
+        return urlToGoogle;
+    }
+
+    public void setUrlToGoogle(String urlToGoogle) {
+        this.urlToGoogle = urlToGoogle;
+    }
+
+    public String getPhotoURL() {
+        return photoURL;
+    }
+
+    public void setPhotoURL(String photoURL) {
+        this.photoURL = photoURL;
     }
 
     public String getName() {
@@ -36,6 +56,14 @@ public class Local implements Serializable {
 
     public void setUrlMenu(String urlMenu) {
         UrlMenu = urlMenu;
+    }
+
+    public ArrayList<Review> getListReviews() {
+        return listReviews;
+    }
+
+    public void setListReviews(ArrayList<Review> listReviews) {
+        this.listReviews = listReviews;
     }
 
     public int getCapacityActual() {
@@ -70,9 +98,7 @@ public class Local implements Serializable {
         this.UUID = UUID;
     }
 
-    public void addEstimote(Estimote e){
-        listEstimotes.add(e);
-    }
+
 
     public ArrayList<Estimote> getListEstimotes() {
         return listEstimotes;
@@ -82,13 +108,14 @@ public class Local implements Serializable {
         this.listEstimotes = listEstimotes;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Local local = (Local) o;
-        return capacityActual == local.capacityActual && capacityMax == local.capacityMax && Double.compare(local.capacityPorcentage, capacityPorcentage) == 0 && Objects.equals(name, local.name) && Objects.equals(listEstimotes, local.listEstimotes) && Objects.equals(UrlMenu, local.UrlMenu);
+
+    public void addEstimote(Estimote e){
+        listEstimotes.add(e);
     }
+    public void addReview(Review e){
+        listReviews.add(e);
+    }
+
 
     public String getPhone() {
         return phone;
@@ -98,21 +125,7 @@ public class Local implements Serializable {
         this.phone = phone;
     }
 
-    @Override
-    public String toString() {
-        return "Local{" +
-                "name='" + name + '\'' +
-                ", UrlMenu='" + UrlMenu + '\'' +
-                ", capacityActual=" + capacityActual +
-                ", capacityMax=" + capacityMax +
-                ", capacityPorcentage=" + capacityPorcentage +
-                '}';
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, listEstimotes, UrlMenu, capacityActual, capacityMax, capacityPorcentage);
-    }
 
     public interface onLocalSeleccionad{
         public void onResultadoLocal(String urlWeb);
@@ -120,5 +133,14 @@ public class Local implements Serializable {
     public interface onLocalNumberPhone{
         public void onResultadoNumberphone2(String numberPhone);
     }
+    public interface onLocalReview{
+        public void onResultadoLocalReview(String localName);
+    }
 
+    @Override
+    public String toString() {
+        return "Local{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

@@ -1,8 +1,9 @@
 package com.example.estimotedrawer.models;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Estimote {
+public class Estimote implements Serializable {
     private int major;
     private int minor;
 

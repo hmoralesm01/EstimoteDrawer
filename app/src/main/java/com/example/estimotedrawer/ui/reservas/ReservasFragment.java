@@ -1,11 +1,10 @@
-package com.example.estimotedrawer.ui.gallery;
+package com.example.estimotedrawer.ui.reservas;
 
 import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
 
 import android.content.Context;
 import android.content.Intent;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,23 +18,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.estimotedrawer.MainActivity;
 import com.example.estimotedrawer.R;
 import com.example.estimotedrawer.addBooking.AddBookingActivity;
-import com.example.estimotedrawer.databinding.FragmentGalleryBinding;
+import com.example.estimotedrawer.databinding.FragmentReservasBinding;
 import com.example.estimotedrawer.models.Booking;
-import com.example.estimotedrawer.models.Local;
-import com.example.estimotedrawer.ui.home.HomeFragment;
 
 import java.util.ArrayList;
 
-public class GalleryFragment extends Fragment implements View.OnClickListener {
+public class ReservasFragment extends Fragment implements View.OnClickListener {
     private  RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter myAdapter;
-    private FragmentGalleryBinding binding;
+    private FragmentReservasBinding binding;
     private Booking.onDeleteBooking odb;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup bookainer, Bundle savedInstanceState) {
-        binding = FragmentGalleryBinding.inflate(inflater, bookainer, false);
+        binding = FragmentReservasBinding.inflate(inflater, bookainer, false);
         View root = binding.getRoot();
+
         inflarRecycle(MainActivity.listaBookings);
 
         binding.bSumar.setOnClickListener(this);
@@ -74,7 +72,6 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
                 Intent i = new Intent(getContext(), AddBookingActivity.class);
                 startActivity(i);
                 break;
-
         }
     }
 

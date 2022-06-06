@@ -81,7 +81,8 @@
                 android:layout_height="match_parent"
                 app:icon="@drawable/delete_icon"
                 tools:ignore="SpeakableTextPresentCheck"
-                android:background="@color/cardviewBoton"/>
+
+            />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

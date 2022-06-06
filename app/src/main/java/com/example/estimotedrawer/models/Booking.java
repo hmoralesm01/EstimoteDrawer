@@ -1,9 +1,14 @@
 package com.example.estimotedrawer.models;
 
 
+import androidx.recyclerview.widget.RecyclerView;
+import com.example.estimotedrawer.ui.reservas.MyAdapterBooking;
+import lombok.Data;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Booking {
+public class Booking implements Serializable {
     private int id;
     private String localName;
     private String phone;
@@ -108,6 +113,6 @@ public class Booking {
     }
 
     public interface onDeleteBooking{
-        public void onResultadoDeletBooking(int idBooking);
+        public void onResultadoDeletBooking(int idBooking, MyAdapterBooking adapter,int position);
     }
 }

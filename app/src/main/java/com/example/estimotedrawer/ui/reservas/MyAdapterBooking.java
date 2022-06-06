@@ -1,11 +1,10 @@
-package com.example.estimotedrawer.ui.gallery;
+package com.example.estimotedrawer.ui.reservas;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -111,8 +110,8 @@ public class MyAdapterBooking extends RecyclerView.Adapter<MyAdapterBooking.View
         viewHolder.getbEliminar().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onDeleteBooking.onResultadoDeletBooking(listaDatos.get(position).getId());
-                Toast.makeText(MainActivity.context, "Elemento borrado", Toast.LENGTH_LONG).show();
+                System.out.println("position = " + position);
+                onDeleteBooking.onResultadoDeletBooking(listaDatos.get(position).getId(), MyAdapterBooking.this, position);
             }
         });
 

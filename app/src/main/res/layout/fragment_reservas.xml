@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.gallery.GalleryFragment">
+    tools:context=".ui.reservas.ReservasFragment">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bSumar"
@@ -12,7 +12,7 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_marginTop="52dp"
-        android:text="+"
+        android:text="@string/sumar"
         app:cornerRadius="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -34,8 +34,9 @@
         android:layout_width="275dp"
         android:layout_height="33dp"
         android:layout_marginTop="64dp"
-        android:text="Reservas"
+        android:text="@string/reservas"
         android:textSize="26dp"
+        android:textColor="@color/headActivity"
         android:textAlignment="center"
         android:background="@color/cardviewColor"
         app:layout_constraintEnd_toEndOf="parent"

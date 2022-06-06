@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:title="Menu"
+        android:title="@string/menu"
         android:id="@+id/act_menu"
         ></item>
     <item
-        android:title="Reserva"
+        android:title="@string/reserva"
         android:id="@+id/act_reservar">
         ></item>
     <item
-        android:title="Enviar Mensaje"
+        android:title="@string/enviar_mensaje"
         android:id="@+id/act_enviarmensaje">
         ></item>
 </menu>

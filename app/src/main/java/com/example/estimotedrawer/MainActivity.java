@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
@@ -34,11 +35,12 @@ import com.estimote.coresdk.observation.region.beacon.BeaconRegion;
 import com.estimote.coresdk.recognition.packets.Beacon;
 import com.estimote.coresdk.service.BeaconManager;
 import com.example.estimotedrawer.databinding.ActivityMainBinding;
+import com.example.estimotedrawer.dialogs.DialogConfirmation;
 import com.example.estimotedrawer.login.log_in;
 import com.example.estimotedrawer.models.Booking;
 import com.example.estimotedrawer.models.Local;
-import com.example.estimotedrawer.ui.gallery.MyAdapterBooking;
 import com.example.estimotedrawer.ui.home.HomeFragment;
+import com.example.estimotedrawer.ui.reservas.MyAdapterBooking;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -50,7 +52,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity implements Booking.onDeleteBooking, Local.onLocalSeleccionad, Local.onLocalNumberPhone, HomeFragment.onPersistenciaDatos {
+public class MainActivity extends AppCompatActivity implements DialogConfirmation.RespuestaDialogoConfirmation, Booking.onDeleteBooking, Local.onLocalReview, Local.onLocalSeleccionad, Local.onLocalNumberPhone, HomeFragment.onPersistenciaDatos {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
@@ -60,8 +62,9 @@ public class MainActivity extends AppCompatActivity implements Booking.onDeleteB
     private BeaconManager beaconManager;
     private BeaconRegion region;
     private FirebaseAuth mAuth;
+    private MyAdapterBooking adapterBooking;
+    private int positionRecycle;
     public static ArrayList<Local> listLocales;
-    private DatabaseReference mDatabase;
     private final static String UUID_ID = "d6714228-7bbb-41fc-91e3-24e6aadd3703";
 
     //bbdd
@@ -69,6 +72,10 @@ public class MainActivity extends AppCompatActivity implements Booking.onDeleteB
     public static ArrayList<Booking> listaBookings;
     public static Context context;
 
+    //reviews
+    private static int[] caras = {R.drawable.caranegativo, R.drawable.carapositivo, R.drawable.caraseria};
+    //reserva
+    private int idReserva;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements Booking.onDeleteB
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_reservas, R.id.nav_exit)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -112,21 +119,12 @@ public class MainActivity extends AppCompatActivity implements Booking.onDeleteB
         }
 
         startActivity(new Intent(this, log_in.class));// falta logOut
-
         //
         createBBDD();
 
         nameChanged();
 
     }//fin on create
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -145,14 +143,13 @@ public class MainActivity extends AppCompatActivity implements Booking.onDeleteB
 
             @Override
             public void onEnteredRegion(BeaconRegion beaconRegion, List<Beacon> beacons) {
-                showNotification("hola habitacion","hola habitacion");
+                showNotification("¡Bienvenido!","Disfruta de la experiencia");
                 incrementarDecrementarContador(true);
-                System.out.println("estamos dentro");
             }
 
             @Override
             public void onExitedRegion(BeaconRegion beaconRegion) {
-                showNotification("adios ","adios");
+                showNotification("Adios ","Gracias por haber venido");
                 incrementarDecrementarContador(false);
             }
         });
@@ -169,10 +166,10 @@ public class MainActivity extends AppCompatActivity implements Booking.onDeleteB
 
     public void showNotification(String title, String message) {
         //crear notificacion
-        String id_canal = "id_canal";
+        String id_canal = "mensaje";
         NotificationChannel channel = new NotificationChannel(
                 id_canal,
-                "Canal Cumpleaños",
+                "mensaje",
                 NotificationManager.IMPORTANCE_HIGH);
 
         NotificationCompat.Builder notificacion = new NotificationCompat.Builder(this);
@@ -180,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements Booking.onDeleteB
         notificacion.setPriority(NotificationCompat.PRIORITY_DEFAULT);
         notificacion.setSmallIcon(R.drawable.notification);
         notificacion.setWhen(System.currentTimeMillis());
-        notificacion.setContentTitle("ALARMA");
+        notificacion.setContentTitle(title);
 
         notificacion.setContentText(message);
 
@@ -203,6 +200,9 @@ public class MainActivity extends AppCompatActivity implements Booking.onDeleteB
                 }else{
                     System.out.println("permisos denegados");
                 }
+                break;
+            case 1:
+                System.out.println("bluetooth = " + requestCode);
         }
     }
     @Override
@@ -236,7 +236,6 @@ public class MainActivity extends AppCompatActivity implements Booking.onDeleteB
     @Override
     public void onPersistencia(ArrayList<Local> lista) {
         this.listLocales = lista;
-        System.out.println("listaLocales = " + listLocales.size());
     }
 
     //aumentar/decrementar contador
@@ -244,7 +243,6 @@ public class MainActivity extends AppCompatActivity implements Booking.onDeleteB
 
         DatabaseReference hopperRef = FirebaseDatabase.getInstance().getReference().child("locales_list").child("0");
         Map<String, Object> hopperUpdates = new HashMap<>();
-        int nu = foundCapacityActual()+130;
 
         if(isIncrementar){
             hopperUpdates.put("capacityActual",foundCapacityActual()+1);
@@ -268,15 +266,21 @@ public class MainActivity extends AppCompatActivity implements Booking.onDeleteB
     }
 
    public void nameChanged(){
-       mAuth = FirebaseAuth.getInstance();
-       NavigationView mNavigationView = findViewById(R.id.nav_view);
-       View headerView = mNavigationView.getHeaderView(0);
-       TextView userName = headerView.findViewById(R.id.tEmail);
-       if(mAuth !=null){
-           userName.setText(String.valueOf(mAuth.getCurrentUser().getEmail()));
-       }else{
-           userName.setText("no email");
-       }
+
+        try {
+            mAuth = FirebaseAuth.getInstance();
+            NavigationView mNavigationView = findViewById(R.id.nav_view);
+            View headerView = mNavigationView.getHeaderView(0);
+            TextView userName = headerView.findViewById(R.id.tEmail);
+            if(mAuth !=null){
+                userName.setText(String.valueOf(mAuth.getCurrentUser().getEmail()));
+            }else{
+                userName.setText("User");
+            }
+        }catch (Exception e){
+            System.out.println("No se ha podido poner el nombre");
+        }
+
 
 
    }
@@ -290,7 +294,6 @@ public class MainActivity extends AppCompatActivity implements Booking.onDeleteB
     @Override
     public void onResultadoNumberphone2(String phoneNumber) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        System.out.println("llamada telefono "+phoneNumber);
         intent.setData(Uri.parse("tel:" + phoneNumber));
         startActivity(intent);
 
@@ -322,12 +325,54 @@ public class MainActivity extends AppCompatActivity implements Booking.onDeleteB
     public void saveInBBDD(Booking book){
         String consulta = "INSERT INTO bookings VALUES ("+book.getId()+"'"+book.getLocalName()+"', '"+book.getPhone()+"','"+book.getDateBooking()+"','"+book.getMadeDateBooking()+"',"+book.getPeople()+",'"+book.getDateBooking()+"')";
         db.execSQL(consulta);
+        getBookings();
+
     }
 
     @Override
-    public void onResultadoDeletBooking(int idBooking) {
-        String consulta = "delete from bookings where rowid ="+idBooking;
+    public void onResultadoDeletBooking(int idBooking, MyAdapterBooking adapter, int position) {
+        this.idReserva = idBooking;
+        DialogConfirmation dc = new DialogConfirmation();
+        this.adapterBooking = adapter;
+        this.positionRecycle = position;
+        dc.show(getSupportFragmentManager(), "dialogo");
+
+    }
+
+    @Override
+    public void onResultadoLocalReview(String localName) {
+        /*Local l = listLocales.stream().filter(local -> local.getName().equalsIgnoreCase(localName)).findFirst().orElse(null);
+        Log.d("nombre ", localName);
+        Intent i = new Intent(this, VerReviewsActivity.class);
+        i.putParcelableArrayListExtra("lista", l.getListReviews());
+
+        startActivity(i);*/
+        String urlWeb = localName;
+        if (!urlWeb.startsWith("http://") && !urlWeb.startsWith("https://"))
+            urlWeb = "http://" + urlWeb;
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlWeb.trim()));
+        startActivity(browserIntent);
+
+    }
+
+    @Override
+    public void onRespuesta(boolean respond) {
+        if(respond){
+            borrarReserva();
+            this.adapterBooking.notifyItemRemoved(this.positionRecycle);
+            Booking b = listaBookings.stream().filter(booking -> booking.getId() == this.idReserva).findFirst().orElse(null);
+            if(b != null){
+                listaBookings.remove(b);
+            }
+        }
+    }
+    public void borrarReserva(){
+        String consulta = "delete from bookings where rowid ="+this.idReserva;
         db.execSQL(consulta);
-        getBookings();
+    }
+    public void aaa(){
+        for(int i=0;i<listLocales.size();i++){
+            saveInBBDD(new Booking(1,listLocales.get(i).getName(),"222333333","25/10/2022", "25/10/2022", 19, "22:22"));
+        }
     }
 }

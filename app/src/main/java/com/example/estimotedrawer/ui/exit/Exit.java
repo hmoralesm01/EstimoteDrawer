@@ -1,4 +1,4 @@
-package com.example.estimotedrawer.ui.slideshow;
+package com.example.estimotedrawer.ui.exit;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,18 +8,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
-import com.example.estimotedrawer.databinding.FragmentSlideshowBinding;
+import com.example.estimotedrawer.databinding.FragmentExitBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class SlideshowFragment extends Fragment {
+public class Exit extends Fragment {
 
-    private FragmentSlideshowBinding binding;
+    private FragmentExitBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentExitBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         closeApp();

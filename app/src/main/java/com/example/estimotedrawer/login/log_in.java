@@ -3,12 +3,15 @@ package com.example.estimotedrawer.login;
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.estimotedrawer.R;
@@ -35,6 +38,7 @@ public class log_in extends AppCompatActivity implements View.OnClickListener {
 
     private ActivityLogInBinding binding;
 
+    private ActionBar actionBar;
 
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
@@ -48,7 +52,10 @@ public class log_in extends AppCompatActivity implements View.OnClickListener {
        super.onCreate(savedInstanceState);
 
         binding = ActivityLogInBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());;
+        setContentView(binding.getRoot());
+        //head color
+        actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#117A65")));
 
         //visibilidad
         binding.signInButton.setVisibility(View.VISIBLE);

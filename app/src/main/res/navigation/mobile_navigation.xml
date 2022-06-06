@@ -12,14 +12,14 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.estimotedrawer.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_reservas"
+        android:name="com.example.estimotedrawer.ui.reservas.ReservasFragment"
+        android:label="@string/reservas"
+        tools:layout="@layout/fragment_reservas" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.estimotedrawer.ui.slideshow.SlideshowFragment"
+        android:id="@+id/nav_exit"
+        android:name="com.example.estimotedrawer.ui.exit.Exit"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_exit" />
 </navigation>

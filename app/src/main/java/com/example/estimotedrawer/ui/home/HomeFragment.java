@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.estimotedrawer.databinding.FragmentHomeBinding;
 import com.example.estimotedrawer.models.Estimote;
 import com.example.estimotedrawer.models.Local;
+import com.example.estimotedrawer.models.Review;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,6 +42,7 @@ public class HomeFragment extends Fragment{
     Local.onLocalSeleccionad obs;
     Local.onLocalNumberPhone oln;
     onPersistenciaDatos inter;
+    Local.onLocalReview olr;
 
 
     //para estar en contacto con el MainActivity y poder transferir datos.
@@ -49,7 +51,7 @@ public class HomeFragment extends Fragment{
         obs=(Local.onLocalSeleccionad)context;
         oln=(Local.onLocalNumberPhone)context;
         inter=(onPersistenciaDatos) context;
-
+        olr = (Local.onLocalReview) context;
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -95,11 +97,13 @@ public class HomeFragment extends Fragment{
                     b.setUUID(String.valueOf(pro.child("UUID").getValue()));
                     b.setCapacityActual(Math.toIntExact((long)pro.child("capacityActual").getValue()));
                     b.setCapacityMax(Math.toIntExact((long)pro.child("capacityMax").getValue()));
-
+                    b.setPhotoURL(String.valueOf(pro.child("photoURL").getValue()));
+                    b.setUrlToGoogle(String.valueOf(pro.child("urlToGoogle").getValue()));
                     //d6714228-7bbb-41fc-91e3-24e6aadd3703
 
                     b.setCapacityPorcentage((double)(b.getCapacityActual()*100)/b.getCapacityMax());
 
+                    //datos estimotes
                     if(pro.hasChild("listEstimotes")){
                         for(DataSnapshot pr : pro.getChildren()){//recorre atributos
                             if(pr.getKey().equalsIgnoreCase("listEstimotes")){
@@ -112,7 +116,19 @@ public class HomeFragment extends Fragment{
                             }
                         }
                     }
-                    System.out.println("b.toString() = " + b.toString()+"  UUID"+b.getUUID());
+                    //review
+                    if(pro.hasChild("reviews")){
+                        for(DataSnapshot pr : pro.getChildren()){
+                            if(pr.getKey().equalsIgnoreCase("reviews")){
+                                for(DataSnapshot pr2 : pr.getChildren()) {
+                                    Review review = new Review();
+                                    review.setImg(Math.toIntExact((long) pr2.child("img").getValue()));
+                                    review.setComment(String.valueOf(pr2.child("comment").getValue()));
+                                    b.addReview(review);
+                                }
+                            }
+                        }
+                    }
                     listaLocales.add(b);
                 }
                 //Mandar la lista al main
@@ -124,7 +140,6 @@ public class HomeFragment extends Fragment{
                      * FIN CREACIÓN DEL RecyclerView
                      */
                 }catch (Exception e){
-                    System.err.println("CARGA del recycle");
                 }
 
             }
@@ -165,7 +180,7 @@ public class HomeFragment extends Fragment{
         binding.recyclerViewHome.setLayoutManager(layoutManager);
 
         // specify an adapter
-        myAdapter = new MyAdapter(locales, obs, oln);
+        myAdapter = new MyAdapter(locales, obs, oln, olr);
 
 
         binding.recyclerViewHome.setAdapter(myAdapter);
@@ -184,6 +199,9 @@ public class HomeFragment extends Fragment{
                 return true;
             case 121:
                 myAdapter.optionPhone(item.getGroupId());
+                return true;
+            case 122:
+                myAdapter.optionReview(item.getGroupId());
                 return true;
             default:
                 return super.onContextItemSelected(item);

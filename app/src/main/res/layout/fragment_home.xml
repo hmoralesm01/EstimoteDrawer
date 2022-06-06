@@ -7,16 +7,15 @@
     tools:context=".ui.home.HomeFragment">
 
     <EditText
-        android:id="@+id/tFiltro"
-        android:layout_width="373dp"
-        android:layout_height="63dp"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+            android:id="@+id/tFiltro"
+            android:layout_width="283dp"
+            android:layout_height="67dp"
+            android:layout_marginTop="28dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" tools:ignore="SpeakableTextPresentCheck"
+            android:layout_marginStart="24dp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewHome"
         android:layout_width="360dp"
@@ -26,4 +25,11 @@
         app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tFiltro" />
+    <ImageView
+            android:src="@drawable/lupa"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/recyclerViewHome"
+            app:layout_constraintStart_toEndOf="@+id/tFiltro" app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
