@@ -117,11 +117,11 @@ public class MainActivity extends AppCompatActivity implements DialogConfirmatio
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, 1);
         }
-
+        //actividad Login
         startActivity(new Intent(this, log_in.class));// falta logOut
-        //
-        createBBDD();
 
+        createBBDD();
+        //cambio de nombre en el menu
         nameChanged();
 
     }//fin on create

@@ -13,8 +13,14 @@
             android:icon="@drawable/booking_icon"
             android:title="@string/reservas" />
         <item
+                android:id="@+id/nav_invitar"
+                android:icon="@drawable/exit_icon"
+                android:title="@string/menu_invitar" />
+
+        <item
             android:id="@+id/nav_exit"
             android:icon="@drawable/exit_icon"
             android:title="@string/menu_slideshow" />
+
     </group>
 </menu>
