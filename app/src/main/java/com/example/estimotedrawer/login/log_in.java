@@ -55,7 +55,7 @@ public class log_in extends AppCompatActivity implements View.OnClickListener {
         setContentView(binding.getRoot());
         //head color
         actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#117A65")));
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));
 
         //visibilidad
         binding.signInButton.setVisibility(View.VISIBLE);

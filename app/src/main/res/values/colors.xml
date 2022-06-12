@@ -8,7 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="cardviewColor">#FEF9E7</color>
-    <color name="cardviewLetra">#196F3D</color>
+    <color name="cardviewLetra">#F5B041</color>
     <color name="cardviewBoton">#48C9B0</color>
-    <color name="headActivity">#117A65</color>
+    <color name="headActivity">#F5B041</color>
 </resources>

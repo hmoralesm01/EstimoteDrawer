@@ -91,7 +91,7 @@ public class Invitar extends Fragment implements View.OnClickListener {
         if(validarEmail()){
             String subject = "¡Eres muy afortunado!";
             String message = "Tu amigo "+ MainActivity.emailUsuario +" quiere invitarte a usar esta App \n \n"+
-                    "https://mega.nz/folder/r2gxCCiD#zPTmGtd8OaadofUI_0kGvQ";
+                    "https://mega.nz/file/nrISGDyJ#l14jrQFQUU-XD76e7LgvEecerc9L_OlijZ_3EPnRv4U";
 
             Intent intent = new Intent(Intent.ACTION_SEND);
 

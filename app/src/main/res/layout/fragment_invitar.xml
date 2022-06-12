@@ -8,28 +8,43 @@
 
 
     <TextView
-            android:text="Direccion de correo"
-            android:layout_width="179dp"
-            android:layout_height="30dp" android:id="@+id/textView4"
+            android:text="Introduce el email del invitado"
+            android:layout_width="312dp"
+            android:textSize="20dp"
+            android:layout_height="67dp" android:id="@+id/textView4"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/tx_email" app:layout_constraintVertical_bias="0.894"
+            app:layout_constraintBottom_toTopOf="@+id/tx_email" app:layout_constraintVertical_bias="0.803"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.331"/>
-    <Button
-            android:text="Invitar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/b_enviarInvitacion"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.498" android:layout_marginBottom="176dp"/>
+            app:layout_constraintHorizontal_bias="0.494"/>
     <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="313dp"
+            android:layout_height="66dp"
             android:inputType="textPersonName"
             android:text="Email"
             android:ems="10"
             android:id="@+id/tx_email"
             app:layout_constraintBottom_toTopOf="@+id/b_enviarInvitacion"
             android:layout_marginEnd="113dp" app:layout_constraintEnd_toEndOf="parent" android:minHeight="48dp"
-            android:layout_marginBottom="240dp" app:layout_constraintStart_toStartOf="@+id/textView4"/>
+            android:layout_marginBottom="64dp" app:layout_constraintStart_toStartOf="@+id/textView4"
+            app:layout_constraintHorizontal_bias="0.0"/>
+    <Button
+            android:text="Invitar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/b_enviarInvitacion"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.498" android:layout_marginBottom="124dp"/>
+    <ImageView
+            android:src="@drawable/invitar_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/imageView3"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/textView4"
+            app:layout_constraintHorizontal_bias="0.495" app:layout_constraintVertical_bias="0.512"/>
+    <ImageView
+            android:src="@drawable/ic_baseline_arrow_downward_24"
+            android:layout_width="297dp"
+            android:layout_height="46dp" android:id="@+id/imageView4"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tx_email" app:layout_constraintTop_toBottomOf="@+id/textView4"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
